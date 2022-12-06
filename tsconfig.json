@@ -1,21 +1,20 @@
 {
+  "extends": "@tsconfig/svelte/tsconfig.json",
   "compilerOptions": {
-    "target": "es2016" /* Set the JavaScript language version for emitted JavaScript and include compatible library declarations. */,
-    "module": "commonjs" /* Specify what module code is generated. */,
-    "resolveJsonModule": true /* Enable importing .json files. */,
-    "allowJs": true /* Allow JavaScript files to be a part of your program. Use the 'checkJS' option to get errors from these files. */,
-    "checkJs": true /* Enable error reporting in type-checked JavaScript files. */,
-    "isolatedModules": true /* Ensure that each file can be safely transpiled without relying on other imports. */,
-    "esModuleInterop": true /* Emit additional JavaScript to ease support for importing CommonJS modules. This enables 'allowSyntheticDefaultImports' for type compatibility. */,
-    "forceConsistentCasingInFileNames": true /* Ensure that casing is correct in imports. */,
-    "strict": true /* Enable all strict type-checking options. */,
-    "skipLibCheck": true /* Skip type checking all .d.ts files. */
+    "target": "ESNext",
+    "useDefineForClassFields": true,
+    "module": "ESNext",
+    "resolveJsonModule": true,
+    /**
+     * Typecheck JS in `.svelte` and `.js` files by default.
+     * Disable checkJs if you'd like to use dynamic types in JS.
+     * Note that setting allowJs false does not prevent the use
+     * of JS in `.svelte` files.
+     */
+    "allowJs": true,
+    "checkJs": true,
+    "isolatedModules": true
   },
-  "include": [
-    "src/**/*.d.ts",
-    "src/**/*.ts",
-    "src/**/*.js",
-    "src/**/*.svelte",
-    "vite.config.ts"
-  ]
+  "include": ["src/**/*.d.ts", "src/**/*.ts", "src/**/*.js", "src/**/*.svelte"],
+  "references": [{ "path": "./tsconfig.node.json" }]
 }
