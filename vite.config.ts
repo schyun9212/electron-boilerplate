@@ -1,6 +1,8 @@
 import { defineConfig } from "vite";
 import { svelte } from "@sveltejs/vite-plugin-svelte";
-import * as path from "path";
+
+const UI_WORKSPACE = "./src/ui";
+const OUTPUT_DIR = "../../dist"; /* Relative to UI_WORKSPACE */
 
 // https://vitejs.dev/config/
 export default defineConfig(({ command, mode }) => {
@@ -8,19 +10,14 @@ export default defineConfig(({ command, mode }) => {
 
   return {
     plugins: [svelte()],
-    root: "./src/ui",
-    resolve: {
-      alias: [
-        {
-          find: "@views",
-          replacement: path.resolve(__dirname, "./src/ui/views"),
-        },
-      ],
-    },
+    root: UI_WORKSPACE,
     build: {
-      outDir: "../../dist",
+      outDir: OUTPUT_DIR,
       rollupOptions: {
-        input: ["./src/ui/views/main/index.html"],
+        input: [
+          `${UI_WORKSPACE}/views/main/index.html`,
+          `${UI_WORKSPACE}/views/sidebar/index.html`,
+        ],
       },
     },
   };
