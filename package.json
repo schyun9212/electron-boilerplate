@@ -4,8 +4,8 @@
   "description": "Boilerplate to build electron application with Svelte",
   "author": "schyun9212",
   "license": "MIT",
-  "type": "module",
-  "main": "src/electron/main.ts",
+  "type": "commonjs",
+  "main": "dist/main.js",
   "devDependencies": {
     "@sveltejs/vite-plugin-svelte": "^1.4.0",
     "@tsconfig/svelte": "^3.0.0",
