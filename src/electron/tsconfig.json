@@ -1,0 +1,10 @@
+{
+  "extends": "../../configs/tsconfig.common.json",
+  "compilerOptions": {
+    "rootDir": ".",
+    "outDir": "../../dist/electron",
+    "composite": true
+  },
+  "include": ["./**/*.d.ts", "./**/*.ts", "./**/*.js"],
+  "references": [{ "path": "../lib" }]
+}

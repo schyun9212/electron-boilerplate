@@ -1,0 +1,9 @@
+{
+  "extends": "../../configs/tsconfig.common.json",
+  "compilerOptions": {
+    "rootDir": ".",
+    "outDir": "../../dist/lib",
+    "composite": true
+  },
+  "include": ["./**/*.d.ts", "./**/*.ts", "./**/*.js"]
+}
