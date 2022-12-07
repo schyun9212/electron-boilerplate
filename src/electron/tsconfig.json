@@ -3,7 +3,10 @@
   "compilerOptions": {
     "rootDir": ".",
     "outDir": "../../dist/electron",
-    "composite": true
+    "composite": true,
+
+    "resolveJsonModule": true,
+    "moduleResolution": "Node"
   },
   "include": ["./**/*.d.ts", "./**/*.ts", "./**/*.js"],
   "references": [{ "path": "../lib" }]
