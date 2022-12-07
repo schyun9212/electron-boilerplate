@@ -3,7 +3,10 @@
   "compilerOptions": {
     "rootDir": ".",
     "outDir": "../../dist/lib",
-    "composite": true
+    "composite": true,
+
+    "resolveJsonModule": true,
+    "moduleResolution": "Node"
   },
   "include": ["./**/*.d.ts", "./**/*.ts", "./**/*.js"]
 }

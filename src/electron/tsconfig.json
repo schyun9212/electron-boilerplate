@@ -2,10 +2,8 @@
   "extends": "../../configs/tsconfig.common.json",
   "compilerOptions": {
     "rootDir": ".",
-    "outDir": "../../dist",
+    "outDir": "../../dist/electron",
     "composite": true,
-
-    "module": "commonjs",
 
     "resolveJsonModule": true,
     "moduleResolution": "Node"

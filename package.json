@@ -5,7 +5,11 @@
   "author": "schyun9212",
   "license": "MIT",
   "type": "commonjs",
-  "main": "dist/main.js",
+  "main": "dist/electron/main.js",
+  "scripts": {
+    "electron:start": "yarn electron:build && electron .",
+    "electron:build": "tsc -b src/electron/tsconfig.json"
+  },
   "devDependencies": {
     "@sveltejs/vite-plugin-svelte": "^1.4.0",
     "@tsconfig/svelte": "^3.0.0",
