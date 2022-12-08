@@ -4,11 +4,19 @@
   "description": "Boilerplate to build electron application with Svelte",
   "author": "schyun9212",
   "license": "MIT",
-  "type": "module",
+  "type": "commonjs",
+  "main": "dist/electron/src/main.js",
+  "scripts": {
+    "ui:build": "vite build -c src/ui/vite.config.ts",
+    "electron:start": "yarn electron:build && electron .",
+    "electron:build": "tsc -b src/electron/tsconfig.json"
+  },
   "devDependencies": {
     "@sveltejs/vite-plugin-svelte": "^1.4.0",
     "@tsconfig/svelte": "^3.0.0",
     "@typescript-eslint/eslint-plugin": "^5.0.0",
+    "electron": "^22.0.0",
+    "electron-builder": "^23.6.0",
     "eslint": "^8.0.1",
     "eslint-config-standard-with-typescript": "^23.0.0",
     "eslint-plugin-import": "^2.25.2",

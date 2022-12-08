@@ -1,0 +1,18 @@
+{
+  "extends": "@tsconfig/svelte/tsconfig.json",
+  "compilerOptions": {
+    "rootDir": ".",
+    "outDir": "../../dist/ui",
+    "composite": true,
+
+    "target": "ESNext",
+    "useDefineForClassFields": true,
+    "module": "ESNext",
+    "resolveJsonModule": true,
+    "allowJs": true,
+    "checkJs": true,
+    "isolatedModules": true
+  },
+  "include": ["./**/*.d.ts", "./**/*.ts", "./**/*.js", "./**/*.svelte"],
+  "references": [{ "path": "../lib" }, { "path": "./tsconfig.node.json" }]
+}

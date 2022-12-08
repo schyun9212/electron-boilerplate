@@ -1,0 +1,12 @@
+{
+  "extends": "../../configs/tsconfig.common.json",
+  "compilerOptions": {
+    "rootDir": ".",
+    "outDir": "../../dist/lib",
+    "composite": true,
+
+    "resolveJsonModule": true,
+    "moduleResolution": "Node"
+  },
+  "include": ["./**/*.d.ts", "./**/*.ts", "./**/*.js"]
+}
