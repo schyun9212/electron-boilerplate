@@ -14,5 +14,5 @@
     "isolatedModules": true
   },
   "include": ["./**/*.d.ts", "./**/*.ts", "./**/*.js", "./**/*.svelte"],
-  "references": [{ "path": "../lib" }]
+  "references": [{ "path": "../lib" }, { "path": "./tsconfig.node.json" }]
 }
