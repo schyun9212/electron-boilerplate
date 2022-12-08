@@ -8,6 +8,6 @@
     "resolveJsonModule": true,
     "moduleResolution": "Node"
   },
-  "include": ["./**/*.d.ts", "./**/*.ts", "./**/*.js"],
+  "include": ["src/**/*.d.ts", "src/**/*.ts", "src/**/*.js"],
   "references": [{ "path": "../lib" }]
 }

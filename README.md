@@ -8,6 +8,10 @@
 - [ ] make dev environment for end-to-end application
 - [ ] implement utility scripts
 
+### Optimization
+
+- [ ] Apply tree-shaking
+
 ### Refactoring
 
 - [ ] define how to compose build directory

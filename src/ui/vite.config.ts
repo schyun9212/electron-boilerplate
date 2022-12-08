@@ -1,12 +1,11 @@
 import { defineConfig } from "vite";
 import { svelte } from "@sveltejs/vite-plugin-svelte";
-import { readdirSync, lstatSync, existsSync } from "fs";
+import { readdirSync, existsSync } from "fs";
 
-const UI_WORKSPACE = "./src/ui";
-const OUTPUT_DIR = "../../dist"; /* Relative to UI_WORKSPACE */
+const OUTPUT_DIR = "../../../dist/ui";
 
 function getEntrypoints(filter?: string[]): string[] {
-  const viewDir = `${UI_WORKSPACE}/views`;
+  const viewDir = `${__dirname}/src/views`;
 
   const entrypoints = readdirSync(viewDir).reduce((prev, v) => {
     if (filter?.length > 0 && !filter.includes(v)) return prev;
@@ -25,7 +24,9 @@ export default defineConfig(({ command, mode }) => {
 
   return {
     plugins: [svelte()],
-    root: UI_WORKSPACE,
+    base: "./",
+    publicDir: "../public",
+    root: __dirname + "/src",
     build: {
       outDir: OUTPUT_DIR,
       rollupOptions: {
