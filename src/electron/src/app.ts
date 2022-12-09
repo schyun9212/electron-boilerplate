@@ -1,17 +1,51 @@
+import { app, BrowserWindow } from "electron";
+
+function createWindow() {
+  const win = new BrowserWindow({
+    // resizable: true,
+    width: 1280,
+    height: 720,
+    webPreferences: {
+      webSecurity: true,
+    },
+  });
+
+  return win;
+}
+
 export class MainApplication {
-  private readonly mainWindow: Electron.BrowserWindow;
+  private _mainWindow: Electron.BrowserWindow;
 
   constructor() {}
 
-  public run() {}
-  private startup() {}
+  public run() {
+    try {
+      this._startup();
+    } catch (e) {
+      this._onError(e);
+    }
+  }
 
-  private createWindow() {}
+  private _startup() {
+    this._registerListeners();
+  }
 
-  private initViews() {}
-  private initService() {}
+  private _initViews() {}
+  private _initServices() {}
 
-  private registerListeners() {}
+  private _registerListeners() {
+    app.on("window-all-closed", () => {
+      if (process.platform !== "darwin") {
+        app.quit();
+      }
+    });
 
-  private onError() {}
+    app.on("activate", () => {
+      if (!this._mainWindow) {
+        this._mainWindow = createWindow();
+      }
+    });
+  }
+
+  private _onError(e: Error) {}
 }

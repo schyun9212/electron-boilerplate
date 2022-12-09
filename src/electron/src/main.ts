@@ -1,4 +1,5 @@
-/* @ts-ignore */
+import "./bootstrap";
+
 import { app, BrowserWindow } from "electron";
 
 let mainWindow: BrowserWindow;
@@ -22,16 +23,4 @@ app.whenReady().then(() => {
   mainWindow.on("closed", () => {
     mainWindow = undefined;
   });
-});
-
-app.on("window-all-closed", () => {
-  if (process.platform !== "darwin") {
-    app.quit();
-  }
-});
-
-app.on("activate", () => {
-  if (!mainWindow) {
-    mainWindow = createWindow();
-  }
 });
