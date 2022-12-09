@@ -1,17 +1,16 @@
-import { session } from "electron";
+import { app, session } from "electron";
 import { resolve } from "path";
-
-export namespace ProtocolSchemes {
-  export const http = "http";
-  export const file = "file";
-  export const appFile = "app-file";
-}
+import { Schemes } from "../common/network";
 
 type ProtocolCallback = (response: string | Electron.ProtocolResponse) => void;
 
 export class FileProtocolService {
+  private readonly rootDir: string;
+
   // TODO: Handle rootdir using interface
-  constructor(private readonly rootDir: string) {
+  constructor() {
+    // TODO: Determine how to handle rootDir without hard coding
+    this.rootDir = `${app.getAppPath()}/dist/${Schemes.appFile}`;
     this.handleProtocols();
   }
 
@@ -20,13 +19,13 @@ export class FileProtocolService {
 
     // Block any file:// access
     defaultSession.protocol.interceptFileProtocol(
-      ProtocolSchemes.file,
+      Schemes.file,
       this.handleFileRequest
     );
 
     // Register app-file:// protocol
     defaultSession.protocol.registerFileProtocol(
-      ProtocolSchemes.appFile,
+      Schemes.appFile,
       this.handleAppFileRequest
     );
   }
@@ -37,7 +36,7 @@ export class FileProtocolService {
   ) {
     // TODO: Print message using log service
     console.error(
-      `Refused to load resource ${request.url} from ${ProtocolSchemes.file} protocol`
+      `Refused to load resource ${request.url} from ${Schemes.file} protocol`
     );
 
     return callback({ error: -3 /* ABORTED */ });
@@ -47,12 +46,10 @@ export class FileProtocolService {
     request: Electron.ProtocolRequest,
     callback: ProtocolCallback
   ) {
-    const path = request.url.substring(ProtocolSchemes.appFile.length + 3);
+    const path = request.url.substring(Schemes.appFile.length + 3);
     const resolvedPath = resolve(this.rootDir, path);
 
-    console.log(
-      `Get request ${request} from ${ProtocolSchemes.appFile} protocol`
-    );
+    console.log(`Get request ${request} from ${Schemes.appFile} protocol`);
     return callback({ path });
   }
 
