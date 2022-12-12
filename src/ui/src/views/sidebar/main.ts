@@ -1,4 +1,4 @@
-import "./Sidebar.css";
+import "./Sidebar.scss";
 import Sidebar from "./Sidebar.svelte";
 
 const app = new Sidebar({

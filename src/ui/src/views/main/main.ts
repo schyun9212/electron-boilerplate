@@ -1,4 +1,4 @@
-import "./Main.css";
+import "./Main.scss";
 import Main from "./Main.svelte";
 
 const app = new Main({
