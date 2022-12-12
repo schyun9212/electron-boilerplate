@@ -1,26 +1,6 @@
 import "./bootstrap";
 
-import { app, BrowserWindow } from "electron";
+import { MainApplication } from "./app";
 
-let mainWindow: BrowserWindow;
-
-function createWindow() {
-  const win = new BrowserWindow({
-    // resizable: true,
-    width: 1280,
-    height: 720,
-    webPreferences: {
-      webSecurity: true,
-    },
-  });
-
-  return win;
-}
-
-app.whenReady().then(() => {
-  mainWindow = createWindow();
-
-  mainWindow.on("closed", () => {
-    mainWindow = undefined;
-  });
-});
+const mainApp = new MainApplication();
+mainApp.run();

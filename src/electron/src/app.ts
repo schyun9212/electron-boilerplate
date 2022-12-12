@@ -28,6 +28,11 @@ export class MainApplication {
 
   private _startup() {
     this._registerListeners();
+
+    app.whenReady().then(() => {
+      this._mainWindow = createWindow();
+      this._mainWindow.loadURL("https://www.naver.com");
+    });
   }
 
   private _initViews() {}
