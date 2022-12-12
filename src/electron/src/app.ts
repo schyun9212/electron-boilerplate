@@ -15,6 +15,7 @@ function createWindow() {
 
 export class MainApplication {
   private _mainWindow: Electron.BrowserWindow;
+  private _services: Record<string, Object>;
 
   constructor() {}
 
@@ -29,15 +30,7 @@ export class MainApplication {
   private _startup() {
     this._registerListeners();
 
-    app.whenReady().then(() => {
-      this._mainWindow = createWindow();
-      // this._mainWindow.loadURL("https://www.naver.com");
-      console.log(`${__dirname}/../../ui/views/main/index.html`);
-      this._mainWindow.loadURL(
-        `file://${__dirname}/../../ui/views/main/index.html`
-      );
-      this._mainWindow.webContents.openDevTools({ mode: "detach" });
-    });
+    app.whenReady().then(this._onReady);
   }
 
   private _initViews() {}
@@ -55,6 +48,16 @@ export class MainApplication {
         this._mainWindow = createWindow();
       }
     });
+  }
+
+  private _onReady() {
+    this._mainWindow = createWindow();
+    // this._mainWindow.loadURL("https://www.naver.com");
+    console.log(`${__dirname}/../../ui/views/main/index.html`);
+    this._mainWindow.loadURL(
+      `file://${__dirname}/../../ui/views/main/index.html`
+    );
+    this._mainWindow.webContents.openDevTools({ mode: "detach" });
   }
 
   private _onError(e: Error) {}
