@@ -1,4 +1,3 @@
-import "./Toolbar.scss";
 import Toolbar from "./Toolbar.svelte";
 
 const app = new Toolbar({

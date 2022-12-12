@@ -31,7 +31,12 @@ export class MainApplication {
 
     app.whenReady().then(() => {
       this._mainWindow = createWindow();
-      this._mainWindow.loadURL("https://www.naver.com");
+      // this._mainWindow.loadURL("https://www.naver.com");
+      console.log(`${__dirname}/../../ui/views/main/index.html`);
+      this._mainWindow.loadURL(
+        `file://${__dirname}/../../ui/views/main/index.html`
+      );
+      this._mainWindow.webContents.openDevTools({ mode: "detach" });
     });
   }
 
