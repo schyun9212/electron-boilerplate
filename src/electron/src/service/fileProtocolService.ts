@@ -1,6 +1,6 @@
 import { app, session } from "electron";
 import { resolve } from "path";
-import { Schemas } from "../common/network";
+import { Schemas } from "../lib/network";
 
 type ProtocolCallback = (response: string | Electron.ProtocolResponse) => void;
 
