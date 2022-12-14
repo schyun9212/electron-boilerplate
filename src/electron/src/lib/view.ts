@@ -40,7 +40,7 @@ export class View extends BrowserView {
     this.layout();
   }
 
-  layout() {}
+  layout(): void {}
 }
 
 export class Window extends BrowserWindow {
