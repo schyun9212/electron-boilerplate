@@ -1,23 +1,11 @@
-import { app, BrowserWindow } from "electron";
-import { Window } from "./lib/view";
+import { app, BrowserView, BrowserWindow } from "electron";
+import { View, Window } from "./lib/view";
 import { MainView } from "./view/main/mainView";
-
-function createWindow() {
-  const win = new BrowserWindow({
-    // resizable: true,
-    width: 1280,
-    height: 720,
-    webPreferences: {
-      webSecurity: true,
-    },
-  });
-
-  return win;
-}
 
 export class MainApplication {
   private _mainWindow: Window | undefined;
   private _view: MainView | undefined;
+
   // private _services: Record<string, Object>;
 
   constructor() {}
@@ -52,19 +40,21 @@ export class MainApplication {
   }
 
   private _onReady() {
-    this._mainWindow = new Window();
+    this._mainWindow = new Window({ width: 1280, height: 720 });
 
-    console.log(this._mainWindow);
-    // this._view = new MainView();
+    // this._mainWindow.webContents.loadURL("https://www.naver.com");
 
-    // this._mainWindow.addView(this._view);
+    this._view = new MainView(null);
+    this._view.setBounds({ x: 0, y: 36, width: 100, height: 100 });
+    this._mainWindow.setView(this._view);
+    this._mainWindow.render();
 
     // this._mainWindow.loadURL("https://www.naver.com");
     // console.log(`${__dirname}/../../ui/views/main/index.html`);
     // this._mainWindow.loadURL(
     //   `file://${__dirname}/../../ui/views/main/index.html`
     // );
-    this._mainWindow.webContents.openDevTools({ mode: "detach" });
+    // this._mainWindow.webContents.openDevTools({ mode: "detach" });
   }
 
   private _onError(e: Error) {}

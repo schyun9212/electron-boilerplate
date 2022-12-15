@@ -59,11 +59,14 @@ export abstract class View {
   }
 
   getBounds(): Electron.Rectangle {
+    console.log(this.name, "getBounds", this._browserView.getBounds());
     return this._browserView.getBounds();
   }
 
   setBounds(bounds: Electron.Rectangle): void {
+    console.log(this.name, "setBounds", bounds);
     this._browserView.setBounds(bounds);
+    console.log(this.name, "post::getBounds", this._browserView.getBounds());
   }
 
   setBackgroundColor(color: string): void {
@@ -117,6 +120,7 @@ export class Window {
   }
 
   getBounds() {
+    console.log("Window", this._browserWindow.getBounds());
     return this._browserWindow.getBounds();
   }
 }
