@@ -1,4 +1,4 @@
-import { BrowserView, BrowserWindow, Rectangle } from "electron";
+import { BrowserView, BrowserWindow } from "electron";
 
 /**
  * TODO
@@ -11,12 +11,14 @@ import { BrowserView, BrowserWindow, Rectangle } from "electron";
 // 1. Determine how to handle inheritance of webPreference
 // 2. Determine whether we should have some manager to handle UI tree for modulization
 // 3. Determine propagation policy for events as Component has children e.g. setBounds, ...
-export class View extends BrowserView {
+// 4. Is it possible to use View as Function Component in React..?
+export abstract class View extends BrowserView {
   public parent: View | undefined = undefined;
 
   // TODO: Make structure of children to heap for search optimization
   protected readonly _children: View[] = [];
 
+  // TODO: Determine how to handle initialization of properties in custom Views
   constructor(options?: Electron.BrowserViewConstructorOptions) {
     super(options);
   }
@@ -29,18 +31,18 @@ export class View extends BrowserView {
   // 1. Determine how to handle bounds.
   // e.g. absolte or relative to parent
   // 2. Determine how to manage children (insert, delete, modify, search, ...)
-  addChildView(view: View, bounds: Electron.Rectangle) {
-    view.setBounds(bounds);
+  addChildView(view: View) {
     view.parent = this;
     this._children.push(view);
   }
 
   setBounds(bounds: Electron.Rectangle): void {
     super.setBounds(bounds);
-    this.layout();
+    this.render();
   }
 
-  layout(): void {}
+  // This method will be called whenever bounds is updated
+  abstract render(): void;
 }
 
 export class Window extends BrowserWindow {
@@ -49,8 +51,8 @@ export class Window extends BrowserWindow {
     view.children().forEach((v) => this.addBrowserView(v));
   }
 
-  removeComponent(view: View): void {
-    view.children().forEach((v) => this.removeComponent(v));
-    this.removeComponent(view);
+  removeView(view: View): void {
+    view.children().forEach((v) => this.removeView(v));
+    this.removeView(view);
   }
 }

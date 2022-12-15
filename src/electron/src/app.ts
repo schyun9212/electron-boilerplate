@@ -1,4 +1,6 @@
 import { app, BrowserWindow } from "electron";
+import { Window } from "./lib/view";
+import { MainView } from "./view/main/mainView";
 
 function createWindow() {
   const win = new BrowserWindow({
@@ -14,8 +16,9 @@ function createWindow() {
 }
 
 export class MainApplication {
-  private _mainWindow: Electron.BrowserWindow;
-  private _services: Record<string, Object>;
+  private _mainWindow: Window | undefined;
+  private _view: MainView | undefined;
+  // private _services: Record<string, Object>;
 
   constructor() {}
 
@@ -29,11 +32,9 @@ export class MainApplication {
 
   private _startup() {
     this._registerListeners();
-
-    app.whenReady().then(this._onReady);
+    app.whenReady().then(() => this._onReady());
   }
 
-  private _initViews() {}
   private _initServices() {}
 
   private _registerListeners() {
@@ -45,18 +46,24 @@ export class MainApplication {
 
     app.on("activate", () => {
       if (!this._mainWindow) {
-        this._mainWindow = createWindow();
+        this._onReady();
       }
     });
   }
 
   private _onReady() {
-    this._mainWindow = createWindow();
+    this._mainWindow = new Window();
+
+    console.log(this._mainWindow);
+    // this._view = new MainView();
+
+    // this._mainWindow.addView(this._view);
+
     // this._mainWindow.loadURL("https://www.naver.com");
-    console.log(`${__dirname}/../../ui/views/main/index.html`);
-    this._mainWindow.loadURL(
-      `file://${__dirname}/../../ui/views/main/index.html`
-    );
+    // console.log(`${__dirname}/../../ui/views/main/index.html`);
+    // this._mainWindow.loadURL(
+    //   `file://${__dirname}/../../ui/views/main/index.html`
+    // );
     this._mainWindow.webContents.openDevTools({ mode: "detach" });
   }
 
