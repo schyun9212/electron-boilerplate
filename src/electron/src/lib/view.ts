@@ -1,4 +1,8 @@
-import { BrowserView, BrowserWindow } from "electron";
+import {
+  BrowserView,
+  BrowserWindow,
+  BrowserWindowConstructorOptions,
+} from "electron";
 
 /**
  * TODO
@@ -12,19 +16,37 @@ import { BrowserView, BrowserWindow } from "electron";
 // 2. Determine whether we should have some manager to handle UI tree for modulization
 // 3. Determine propagation policy for events as Component has children e.g. setBounds, ...
 // 4. Is it possible to use View as Function Component in React..?
-export abstract class View extends BrowserView {
-  public parent: View | undefined = undefined;
+// 5. Implement APIs to bridge View with BrowserView
+export abstract class View {
+  // Extending BrowserView is blocked by policy
+  private readonly _browserView: BrowserView;
 
   // TODO: Make structure of children to heap for search optimization
   protected readonly _children: View[] = [];
 
   // TODO: Determine how to handle initialization of properties in custom Views
-  constructor(options?: Electron.BrowserViewConstructorOptions) {
-    super(options);
+  constructor(
+    public parent: View | null,
+    options?: Electron.BrowserViewConstructorOptions
+  ) {
+    if (parent) parent.addChildView(this);
+    this._browserView = new BrowserView(options);
   }
 
-  children() {
+  get children() {
     return this._children;
+  }
+
+  get browserView() {
+    return this._browserView;
+  }
+
+  get webContents() {
+    return this._browserView.webContents;
+  }
+
+  get name() {
+    return this.constructor.name;
   }
 
   // TODO
@@ -36,23 +58,65 @@ export abstract class View extends BrowserView {
     this._children.push(view);
   }
 
+  getBounds(): Electron.Rectangle {
+    return this._browserView.getBounds();
+  }
+
   setBounds(bounds: Electron.Rectangle): void {
-    super.setBounds(bounds);
-    this.render();
+    this._browserView.setBounds(bounds);
+  }
+
+  setBackgroundColor(color: string): void {
+    this._browserView.setBackgroundColor(color);
+  }
+
+  setAutoResize(options: Electron.AutoResizeOptions): void {
+    this._browserView.setAutoResize(options);
   }
 
   // This method will be called whenever bounds is updated
   abstract render(): void;
 }
 
-export class Window extends BrowserWindow {
-  addView(view: View): void {
-    this.addBrowserView(view);
-    view.children().forEach((v) => this.addBrowserView(v));
+// TODO
+// 1. Implement APIs to bridge Window with BrowserWindow
+export class Window {
+  private _rootView: View | undefined;
+  // Extending BrowserWindow is blocked by policy
+  private readonly _browserWindow: BrowserWindow;
+
+  constructor(options?: BrowserWindowConstructorOptions) {
+    this._browserWindow = new BrowserWindow(options);
   }
 
-  removeView(view: View): void {
-    view.children().forEach((v) => this.removeView(v));
-    this.removeView(view);
+  get browserWindow() {
+    return this._browserWindow;
+  }
+
+  get webContents() {
+    return this._browserWindow.webContents;
+  }
+
+  setView(view: View): void {
+    this._rootView = view;
+    this._addView(view);
+  }
+
+  render() {
+    this._rootView?.render();
+  }
+
+  private _addView(view: View): void {
+    this._browserWindow.addBrowserView(view.browserView);
+    view.children.forEach((v) => this._addView(v));
+  }
+
+  private _removeView(view: View): void {
+    view.children.forEach((v) => this._removeView(v));
+    this._browserWindow.removeBrowserView(view.browserView);
+  }
+
+  getBounds() {
+    return this._browserWindow.getBounds();
   }
 }
