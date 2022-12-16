@@ -23,15 +23,10 @@ export class MainView extends View {
 
   render(): void {
     const { x, y, width, height } = this.getBounds();
-    console.log("MainView---", this.getBounds());
     this.sidebarView.setBounds({ x, y, width: 100, height });
-    console.log("SidebarView", this.sidebarView.getBounds());
     this.sidebarView.webContents.loadURL("https://www.naver.com");
 
     // this.contentsView.setBounds({ x: x + 100, y, width: width - 100, height });
     // this.contentsView.setBackgroundColor("#000");
-
-    // this.addChildView(this.contentsView);
-    // console.log("??");
   }
 }
