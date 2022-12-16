@@ -1,37 +1,6 @@
-/* @ts-ignore */
-import { app, BrowserWindow } from "electron";
+import "./bootstrap";
 
-let mainWindow: BrowserWindow;
+import { MainApplication } from "./app";
 
-function createWindow() {
-  const win = new BrowserWindow({
-    // resizable: true,
-    width: 1280,
-    height: 720,
-    webPreferences: {
-      webSecurity: true,
-    },
-  });
-
-  return win;
-}
-
-app.whenReady().then(() => {
-  mainWindow = createWindow();
-
-  mainWindow.on("closed", () => {
-    mainWindow = undefined;
-  });
-});
-
-app.on("window-all-closed", () => {
-  if (process.platform !== "darwin") {
-    app.quit();
-  }
-});
-
-app.on("activate", () => {
-  if (!mainWindow) {
-    mainWindow = createWindow();
-  }
-});
+const mainApp = new MainApplication();
+mainApp.run();

@@ -15,7 +15,8 @@
 ### Refactoring
 
 - [ ] define how to compose build directory
+- [ ] manage API in the same code
 
-### Protocol
+### Service
 
 - [ ] implement virtual file system and protocol

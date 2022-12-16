@@ -1,4 +1,3 @@
-import "./Main.css";
 import Main from "./Main.svelte";
 
 const app = new Main({

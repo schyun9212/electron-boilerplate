@@ -1,6 +1,6 @@
-import Sidebar from "./Sidebar.svelte";
+import Toolbar from "./Toolbar.svelte";
 
-const app = new Sidebar({
+const app = new Toolbar({
   target: document.getElementById("app")!,
 });
 

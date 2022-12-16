@@ -27,7 +27,7 @@
   </p>
 </main>
 
-<style type="css">
+<style>
   .logo {
     height: 6em;
     padding: 1.5em;
