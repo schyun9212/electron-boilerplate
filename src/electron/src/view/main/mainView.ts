@@ -27,6 +27,12 @@ export class MainView extends View {
     this.sidebarView.setBackgroundColor("#FF0000");
 
     this.contentsView.setBounds({ x: x + 300, y, width: width - 100, height });
-    this.contentsView.setBackgroundColor("#0000FF");
+    // this.contentsView.setBackgroundColor("#0000FF");
+
+    this.contentsView.webContents.loadURL(
+      "app-file://ui/views/main/index.html"
+    );
+
+    this.contentsView.webContents.openDevTools({ mode: "detach" });
   }
 }
