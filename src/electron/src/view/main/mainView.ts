@@ -23,10 +23,10 @@ export class MainView extends View {
 
   render(): void {
     const { x, y, width, height } = this.getBounds();
-    this.sidebarView.setBounds({ x, y, width: 100, height });
-    this.sidebarView.webContents.loadURL("https://www.naver.com");
+    this.sidebarView.setBounds({ x, y, width: 300, height });
+    this.sidebarView.setBackgroundColor("#FF0000");
 
-    // this.contentsView.setBounds({ x: x + 100, y, width: width - 100, height });
-    // this.contentsView.setBackgroundColor("#000");
+    this.contentsView.setBounds({ x: x + 300, y, width: width - 100, height });
+    this.contentsView.setBackgroundColor("#0000FF");
   }
 }

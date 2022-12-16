@@ -44,8 +44,6 @@ export class MainApplication {
 
     this._view = new MainView(null);
     this._mainWindow.setView(this._view);
-
-    this._view.setBounds({ x: 0, y: 36, width: 100, height: 100 });
     this._mainWindow.render();
   }
 

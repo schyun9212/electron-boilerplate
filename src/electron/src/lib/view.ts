@@ -59,14 +59,11 @@ export abstract class View {
   }
 
   getBounds(): Electron.Rectangle {
-    console.log(this.name, "getBounds", this._browserView.getBounds());
     return this._browserView.getBounds();
   }
 
   setBounds(bounds: Electron.Rectangle): void {
-    console.log(this.name, "setBounds", bounds);
     this._browserView.setBounds(bounds);
-    console.log(this.name, "post::getBounds", this._browserView.getBounds());
   }
 
   setBackgroundColor(color: string): void {
@@ -106,7 +103,22 @@ export class Window {
   }
 
   render() {
-    this._rootView?.render();
+    if (!this._rootView) return;
+
+    const { height: windowHeight } = this.getBounds();
+    const { width: contentWidth, height: contentHeight } =
+      this.getContentBounds();
+
+    const yOffset = windowHeight - contentHeight;
+
+    this._rootView.setBounds({
+      x: 0,
+      y: yOffset,
+      width: contentWidth,
+      height: contentHeight,
+    });
+
+    this._rootView.render();
   }
 
   private _addView(view: View): void {
@@ -120,7 +132,14 @@ export class Window {
   }
 
   getBounds() {
-    console.log("Window", this._browserWindow.getBounds());
     return this._browserWindow.getBounds();
+  }
+
+  getContentBounds() {
+    return this._browserWindow.getContentBounds();
+  }
+
+  getContentSize() {
+    return this._browserWindow.getContentSize();
   }
 }
