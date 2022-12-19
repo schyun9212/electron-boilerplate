@@ -4,6 +4,8 @@ import {
   BrowserWindowConstructorOptions,
 } from "electron";
 
+import { EventEmitter } from "events";
+
 /**
  * TODO
  *
@@ -17,18 +19,22 @@ import {
 // 3. Determine propagation policy for events as Component has children e.g. setBounds, ...
 // 4. Is it possible to use View as Function Component in React..?
 // 5. Implement APIs to bridge View with BrowserView
-export abstract class View {
+export abstract class View extends EventEmitter {
   // Extending BrowserView is blocked by policy
   private readonly _browserView: BrowserView;
 
   // TODO: Make structure of children to heap for search optimization
   protected readonly _children: View[] = [];
 
-  // TODO: Determine how to handle initialization of properties in custom Views
+  // TODO
+  // 1. Determine how to handle initialization of properties in custom Views
+  // 2. Determine how to handle options for EventEmitter
   constructor(
     public parent: View | null,
     options?: Electron.BrowserViewConstructorOptions
   ) {
+    super();
+
     if (parent) parent.addChildView(this);
     this._browserView = new BrowserView(options);
   }
@@ -80,12 +86,14 @@ export abstract class View {
 
 // TODO
 // 1. Implement APIs to bridge Window with BrowserWindow
-export class Window {
+export class Window extends EventEmitter {
   private _rootView: View | undefined;
   // Extending BrowserWindow is blocked by policy
   private readonly _browserWindow: BrowserWindow;
 
   constructor(options?: BrowserWindowConstructorOptions) {
+    super();
+
     this._browserWindow = new BrowserWindow(options);
   }
 
