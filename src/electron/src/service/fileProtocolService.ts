@@ -2,6 +2,8 @@ import { app, session } from "electron";
 import { resolve } from "path";
 import { Schemas } from "../lib/network";
 
+import { existsSync, mkdir } from "fs";
+
 type ProtocolCallback = (response: string | Electron.ProtocolResponse) => void;
 
 export class FileProtocolService {
@@ -9,9 +11,20 @@ export class FileProtocolService {
 
   // TODO: Handle rootdir using interface
   constructor() {
+    this.handleProtocols();
+
     // TODO: Determine how to handle rootDir without hard coding
     this._rootDir = `${app.getAppPath()}/dist/${Schemas.appFile}`;
-    this.handleProtocols();
+    console.log(this._rootDir);
+
+    if (!existsSync(this._rootDir)) {
+      mkdir(this._rootDir, (e) => {
+        if (e === null) return;
+
+        // TODO: Determine what we have to do if we cannot use fs
+        console.error(e);
+      });
+    }
   }
 
   private handleProtocols() {
@@ -20,13 +33,13 @@ export class FileProtocolService {
     // Block any file:// access
     defaultSession.protocol.interceptFileProtocol(
       Schemas.file,
-      this.handleFileRequest
+      (request, callback) => this.handleFileRequest(request, callback)
     );
 
     // Register app-file:// protocol
     defaultSession.protocol.registerFileProtocol(
       Schemas.appFile,
-      this.handleAppFileRequest
+      (request, callback) => this.handleAppFileRequest(request, callback)
     );
   }
 
@@ -49,11 +62,15 @@ export class FileProtocolService {
     const path = request.url.substring(Schemas.appFile.length + 3);
     const resolvedPath = resolve(this._rootDir, path);
 
-    console.log(`Get request ${request} from ${Schemas.appFile} protocol`);
-    return callback({ path });
+    if (this.isValidURL(resolvedPath)) {
+      return callback({ path: resolvedPath });
+    }
+
+    return callback({ error: -3 /* ABORTED */ });
   }
 
   public isValidURL(url: string) {
-    return url.startsWith(this._rootDir);
+    const resolvedURL = resolve(url);
+    return resolvedURL.startsWith(this._rootDir);
   }
 }

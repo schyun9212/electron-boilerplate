@@ -1,3 +1,5 @@
+import "../../styles/global.scss";
+
 import Sidebar from "./Sidebar.svelte";
 
 const app = new Sidebar({

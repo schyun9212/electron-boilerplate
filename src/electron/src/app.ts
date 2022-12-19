@@ -1,12 +1,15 @@
-import { app, BrowserView, BrowserWindow } from "electron";
-import { View, Window } from "./lib/view";
+import { app } from "electron";
+import { Window } from "./lib/view";
+import { FileProtocolService } from "./service/fileProtocolService";
 import { MainView } from "./view/main/mainView";
+
+// TODO: Determine how to manage services
 
 export class MainApplication {
   private _mainWindow: Window | undefined;
   private _view: MainView | undefined;
 
-  // private _services: Record<string, Object>;
+  private _services: Record<string, Object> = {};
 
   constructor() {}
 
@@ -23,7 +26,10 @@ export class MainApplication {
     app.whenReady().then(() => this._onReady());
   }
 
-  private _initServices() {}
+  private _initServices() {
+    const fileProtocolService = new FileProtocolService();
+    this._services.fileProtocolService = fileProtocolService;
+  }
 
   private _registerListeners() {
     app.on("window-all-closed", () => {
@@ -40,6 +46,8 @@ export class MainApplication {
   }
 
   private _onReady() {
+    this._initServices();
+
     this._mainWindow = new Window({ width: 1280, height: 720 });
 
     this._view = new MainView(null);
