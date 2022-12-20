@@ -1,4 +1,4 @@
-import { View } from "../../lib/view";
+import { View } from "../../common/view";
 
 export class SidebarView extends View {
   render(): void {
