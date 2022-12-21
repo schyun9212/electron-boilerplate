@@ -27,6 +27,8 @@ export class EventManager<T extends string> implements IDisposable {
     this._emitter.removeListener(eventName, callback);
   }
 
+  reserve<F>(date: Date, eventName: T, payload: F) {}
+
   dispose(): void {
     this._emitter.removeAllListeners();
   }
