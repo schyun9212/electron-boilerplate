@@ -9,21 +9,23 @@ import {
 
 import { IDisposable } from "./lifecycle";
 
-type ScheduleSpec = string | number | RecurrenceRule;
-type ScheduleRule =
+export type ScheduleSpec = string | number | RecurrenceRule;
+export type ScheduleRule =
   | ScheduleSpec
   | RecurrenceSpecDateRange
   | RecurrenceSpecObjLit
   | Date;
 
-class Scheduler implements IDisposable {
-  // TODO: Determine whether we use scheduledJobs from node-schedule
+export class Scheduler implements IDisposable {
   protected _jobs: { [jobName: string]: Job } = {};
 
-  // TODO: Restrict usable timezone
   constructor() {}
 
-  register(name: string, rule: ScheduleRule, callback: JobCallback) {
+  schedule(
+    name: string,
+    rule: ScheduleRule,
+    callback: JobCallback
+  ): string | undefined {
     const job = scheduleJob(name, rule, callback);
 
     if (name in this._jobs) {
@@ -31,6 +33,7 @@ class Scheduler implements IDisposable {
     }
 
     this._jobs[name] = job;
+    return job.name;
   }
 
   cancel(name: string) {
@@ -59,5 +62,3 @@ class Scheduler implements IDisposable {
     Object.values(this._jobs).forEach((job) => job.cancel());
   }
 }
-
-export const scheduler = new Scheduler();
