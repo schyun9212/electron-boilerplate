@@ -59,6 +59,6 @@ export class Scheduler implements IDisposable {
   }
 
   dispose(): void {
-    Object.values(this._jobs).forEach((job) => job.cancel());
+    Object.keys(this._jobs).forEach((name) => this.cancel(name));
   }
 }
