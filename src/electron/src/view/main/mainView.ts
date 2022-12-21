@@ -1,9 +1,12 @@
 import { View } from "../../common/view";
+import { mainEventManager } from "../../event/mainEventManager";
 
 export class SidebarView extends View {
   render(): void {
     // this.webContents.loadURL("");
   }
+
+  dispose(): void {}
 }
 
 export class MainView extends View {
@@ -34,5 +37,10 @@ export class MainView extends View {
     );
 
     this.contentsView.webContents.openDevTools({ mode: "detach" });
+  }
+
+  dispose(): void {
+    this.sidebarView.dispose();
+    this.contentsView.dispose();
   }
 }

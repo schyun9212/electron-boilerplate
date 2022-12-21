@@ -1,9 +1,10 @@
 import { EventEmitter } from "events";
+import { IDisposable } from "./lifecycle";
 
 type EventCallback = <T>(payload: T) => void;
 
 // Pass union string type to restrict usable event names
-export class EventManager<T extends string> {
+export class EventManager<T extends string> implements IDisposable {
   protected _emitter: EventEmitter;
 
   constructor() {
@@ -24,5 +25,9 @@ export class EventManager<T extends string> {
 
   removeListener(eventName: T, callback: EventCallback) {
     this._emitter.removeListener(eventName, callback);
+  }
+
+  dispose(): void {
+    this._emitter.removeAllListeners();
   }
 }
