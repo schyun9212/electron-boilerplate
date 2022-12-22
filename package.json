@@ -14,6 +14,8 @@
   "devDependencies": {
     "@sveltejs/vite-plugin-svelte": "^1.4.0",
     "@tsconfig/svelte": "^3.0.0",
+    "@types/node": "^18.11.17",
+    "@types/node-schedule": "^2.1.0",
     "@typescript-eslint/eslint-plugin": "^5.0.0",
     "electron": "^22.0.0",
     "electron-builder": "^23.6.0",
@@ -30,5 +32,8 @@
     "tslib": "^2.4.1",
     "typescript": "*",
     "vite": "^3.2.4"
+  },
+  "dependencies": {
+    "node-schedule": "^2.1.0"
   }
 }

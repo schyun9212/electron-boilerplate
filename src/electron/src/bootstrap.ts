@@ -1,5 +1,5 @@
 import { protocol } from "electron";
-import { Schemas } from "./lib/network";
+import { Schemas } from "./common/network";
 
 // TODO: register priviliged schemas dynamically
 const customSchemes: Electron.CustomScheme[] = [

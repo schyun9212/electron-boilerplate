@@ -1,5 +1,5 @@
 import { app } from "electron";
-import { Window } from "./lib/view";
+import { Window } from "./common/view";
 import { FileProtocolService } from "./service/fileProtocolService";
 import { MainView } from "./view/main/mainView";
 

@@ -1,6 +1,6 @@
 import { app, session } from "electron";
 import { resolve } from "path";
-import { Schemas } from "../lib/network";
+import { Schemas } from "../common/network";
 
 import { existsSync, mkdir } from "fs";
 

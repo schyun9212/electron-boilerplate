@@ -5,6 +5,7 @@ import {
 } from "electron";
 
 import { EventEmitter } from "events";
+import { IDisposable } from "./lifecycle";
 
 /**
  * TODO
@@ -19,7 +20,7 @@ import { EventEmitter } from "events";
 // 3. Determine propagation policy for events as Component has children e.g. setBounds, ...
 // 4. Is it possible to use View as Function Component in React..?
 // 5. Implement APIs to bridge View with BrowserView
-export abstract class View extends EventEmitter {
+export abstract class View extends EventEmitter implements IDisposable {
   // Extending BrowserView is blocked by policy
   private readonly _browserView: BrowserView;
 
@@ -82,11 +83,13 @@ export abstract class View extends EventEmitter {
 
   // This method will be called whenever bounds is updated
   abstract render(): void;
+
+  abstract dispose(): void;
 }
 
 // TODO
 // 1. Implement APIs to bridge Window with BrowserWindow
-export class Window extends EventEmitter {
+export class Window extends EventEmitter implements IDisposable {
   private _rootView: View | undefined;
   // Extending BrowserWindow is blocked by policy
   private readonly _browserWindow: BrowserWindow;
@@ -149,5 +152,10 @@ export class Window extends EventEmitter {
 
   getContentSize() {
     return this._browserWindow.getContentSize();
+  }
+
+  dispose(): void {
+    this._browserWindow.removeAllListeners();
+    this._browserWindow.close();
   }
 }
