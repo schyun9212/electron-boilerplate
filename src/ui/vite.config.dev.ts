@@ -8,9 +8,10 @@ export default defineConfig(({ command, mode }) => {
   return {
     plugins: [svelte()],
     base: "./",
+    root: __dirname + "/src",
     publicDir: "./public",
     server: {
-      open: "src/ui/index.html",
+      open: "dev.html",
     },
   };
 });
