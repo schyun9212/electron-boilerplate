@@ -7,6 +7,7 @@
   "type": "commonjs",
   "main": "dist/electron/src/main.js",
   "scripts": {
+    "ui:start": "vite start -c src/ui/vite.config.dev.ts",
     "ui:build": "vite build -c src/ui/vite.config.ts",
     "electron:start": "yarn electron:build && electron .",
     "electron:build": "tsc -b src/electron/tsconfig.json"
@@ -32,7 +33,7 @@
     "svelte-preprocess": "^4.10.7",
     "tslib": "^2.4.1",
     "typescript": "*",
-    "vite": "^3.2.4"
+    "vite": "^4.0.3"
   },
   "dependencies": {
     "node-schedule": "^2.1.0"
