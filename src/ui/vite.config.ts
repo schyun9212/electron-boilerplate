@@ -1,6 +1,6 @@
 import { defineConfig } from "vite";
-import { svelte } from "@sveltejs/vite-plugin-svelte";
 import { readdirSync, existsSync } from "fs";
+import react from "@vitejs/plugin-react";
 
 const OUTPUT_DIR = "../../dist/app-file/ui";
 
@@ -23,7 +23,7 @@ export default defineConfig(({ command, mode }) => {
   // TODO: Determine how to handle
 
   return {
-    plugins: [svelte()],
+    plugins: [react()],
     base: "./",
     publicDir: "public",
     root: __dirname,
