@@ -1,4 +1,4 @@
-import "../../styles/global.scss";
+import "../../lib/styles/global.scss";
 
 import Main from "./Main.svelte";
 
