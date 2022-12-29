@@ -130,6 +130,7 @@ export class Window extends EventEmitter implements IDisposable {
     });
 
     this._rootView.render();
+    this._rootView.children.forEach((c) => c.render());
   }
 
   private _addView(view: View): void {

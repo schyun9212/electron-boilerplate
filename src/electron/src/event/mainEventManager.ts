@@ -1,4 +1,4 @@
-import { EventManager } from "../common/event";
+import { RestrictedEmitter } from "../common/event";
 
 /**
  * Define action functions will be used as interface
@@ -7,7 +7,7 @@ import { EventManager } from "../common/event";
 interface MainGlobalEvents {}
 
 class MainEventManager
-  extends EventManager<keyof MainGlobalEvents>
+  extends RestrictedEmitter<keyof MainGlobalEvents>
   implements MainGlobalEvents {}
 
 // This instance will work like a singleton
