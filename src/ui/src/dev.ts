@@ -1,8 +1,8 @@
 import "./styles/global.scss";
 
-import Main from "./Router.svelte";
+import Router from "./Router.svelte";
 
-const app = new Main({
+const app = new Router({
   target: document.getElementById("app")!,
 });
 
