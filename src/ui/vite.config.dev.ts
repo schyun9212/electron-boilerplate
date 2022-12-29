@@ -7,8 +7,5 @@ export default defineConfig(({ command, mode }) => {
 
   return {
     plugins: [sveltekit()],
-    base: "./",
-    root: __dirname + "/src",
-    publicDir: "./public",
   };
 });

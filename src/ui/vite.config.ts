@@ -2,7 +2,7 @@ import { defineConfig } from "vite";
 import { svelte } from "@sveltejs/vite-plugin-svelte";
 import { readdirSync, existsSync } from "fs";
 
-const OUTPUT_DIR = "../../../dist/app-file/ui";
+const OUTPUT_DIR = "../../dist/app-file/ui";
 
 function getEntrypoints(filter?: string[]): string[] {
   const viewDir = `${__dirname}/src/views`;
@@ -25,8 +25,8 @@ export default defineConfig(({ command, mode }) => {
   return {
     plugins: [svelte()],
     base: "./",
-    publicDir: "../public",
-    root: __dirname + "/src",
+    publicDir: "public",
+    root: __dirname,
     build: {
       outDir: OUTPUT_DIR,
       rollupOptions: {

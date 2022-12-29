@@ -3,10 +3,9 @@ import type { Config } from "@sveltejs/kit";
 const config: Config = {
   kit: {
     files: {
-      routes: "views",
+      routes: "src/views",
     },
   },
-  package: {},
 };
 
 export default config;
